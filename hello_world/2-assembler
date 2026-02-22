@@ -1,2 +1,2 @@
 #!/bin/bash
-
+gcc -S $CFILE ; cat -v 2-main.s ; rm 2-main.s'"'"''
