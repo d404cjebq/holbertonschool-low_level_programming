@@ -1,2 +1,2 @@
 #!/bin/bash
-gcc -S
+gcc -o quote -Wall -Werror -W
