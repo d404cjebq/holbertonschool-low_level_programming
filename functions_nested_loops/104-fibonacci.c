@@ -7,15 +7,20 @@
  */
 int main(void)
 {
-	unsigned long int a_hi, a_lo;
-	unsigned long int b_hi, b_lo;
-	unsigned long int t_hi, t_lo;
+	unsigned long int a_hi;
+	unsigned long int a_lo;
+	unsigned long int b_hi;
+	unsigned long int b_lo;
+	unsigned long int t_hi;
+	unsigned long int t_lo;
+	unsigned long int base;
 	int i;
-	unsigned long int base = 10000000000UL;
 
-	a_hi = 0; a_lo = 1;
-	b_hi = 0; b_lo = 2;
-
+	base = 10000000000UL;
+	a_hi = 0;
+	a_lo = 1;
+	b_hi = 0;
+	b_lo = 2;
 	i = 1;
 	while (i <= 98)
 	{
