@@ -6,13 +6,7 @@
  *
  * Return: Always 0.
  */
-int main(void)
+int mul(int a, int b)
 {
-	int x=5;
-	int y=2;
-	int mul=x*y;
-
-    printf("%d\n",mul );
-    printf("%d\n",mul);
-    return (0);
+	return (a * b);
 }
