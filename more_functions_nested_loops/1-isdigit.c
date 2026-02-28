@@ -6,9 +6,6 @@
  *
  * Return: Always 0.
  */
-int main(void)
-{
-    char c;
 
  int _isupper(int c)
 {
