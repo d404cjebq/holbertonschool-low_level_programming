@@ -7,23 +7,31 @@
  */
 int main(void)
 {
-	unsigned long int a;
-	unsigned long int b;
-	unsigned long int temp;
+	unsigned long int a_hi, a_lo;
+	unsigned long int b_hi, b_lo;
+	unsigned long int t_hi, t_lo;
 	int i;
+	unsigned long int base = 10000000000UL;
 
-	a = 1;
-	b = 2;
+	a_hi = 0; a_lo = 1;
+	b_hi = 0; b_lo = 2;
+
 	i = 1;
 	while (i <= 98)
 	{
-		if (i < 98)
-			printf("%lu, ", a);
+		if (a_hi > 0)
+			printf("%lu%010lu", a_hi, a_lo);
 		else
-			printf("%lu", a);
-		temp = a + b;
-		a = b;
-		b = temp;
+			printf("%lu", a_lo);
+		if (i < 98)
+			printf(", ");
+		t_lo = a_lo + b_lo;
+		t_hi = a_hi + b_hi + t_lo / base;
+		t_lo = t_lo % base;
+		a_hi = b_hi;
+		a_lo = b_lo;
+		b_hi = t_hi;
+		b_lo = t_lo;
 		i++;
 	}
 	printf("\n");
