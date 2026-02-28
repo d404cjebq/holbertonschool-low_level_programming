@@ -8,7 +8,11 @@
  */
 int main(void)
 {
-    printf("%d\n", 98* 1024);
-    printf("%d\n",-402* 4096);
+	int x=5;
+	int y=2;
+	int mul=x*y;
+
+    printf("%d\n",mul );
+    printf("%d\n",mul);
     return (0);
 }
