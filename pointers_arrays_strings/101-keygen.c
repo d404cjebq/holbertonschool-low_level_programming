@@ -11,31 +11,18 @@ int main(void)
 {
 	int i;
 	int sum;
-	int last;
 	int c;
 
 	srand(time(NULL));
 	sum = 0;
 
-	for (i = 0; i < 6; i++)
+	for (i = 0; i < 26; i++)
 	{
-		c = (rand() % 30) + 40;
+		c = (rand() % 26) + 97;
 		sum += c;
 		printf("%c", c);
 	}
 
-	last = 2772 - sum;
-	while (last > 126 || last < 33)
-	{
-		sum = 0;
-		for (i = 0; i < 6; i++)
-		{
-			c = (rand() % 30) + 40;
-			sum += c;
-			printf("%c", c);
-		}
-		last = 2772 - sum;
-	}
-	printf("%c\n", last);
+	printf("%c\n", 2772 - sum);
 	return (0);
 }
