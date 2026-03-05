@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 /**
  * main - generates a valid password for 101-crackme
@@ -8,13 +10,32 @@
 int main(void)
 {
 	int i;
+	int sum;
+	int last;
+	int c;
 
-	/* 2772 / 12 = 231 لكن كبير، نستخدم حروف متكررة */
-	/* 'z' = 122, نحتاج 2772 / 122 = ~22 حرف */
-	for (i = 0; i < 22; i++)
-		printf("%c", 'z');
+	srand(time(NULL));
+	sum = 0;
 
-	/* 2772 - (22 * 122) = 2772 - 2684 = 88 = 'X' */
-	printf("%c\n", 'X');
+	for (i = 0; i < 6; i++)
+	{
+		c = (rand() % 30) + 40;
+		sum += c;
+		printf("%c", c);
+	}
+
+	last = 2772 - sum;
+	while (last > 126 || last < 33)
+	{
+		sum = 0;
+		for (i = 0; i < 6; i++)
+		{
+			c = (rand() % 30) + 40;
+			sum += c;
+			printf("%c", c);
+		}
+		last = 2772 - sum;
+	}
+	printf("%c\n", last);
 	return (0);
 }
