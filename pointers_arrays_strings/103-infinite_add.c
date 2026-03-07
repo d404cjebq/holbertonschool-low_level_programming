@@ -61,18 +61,22 @@ char *infinite_add(char *n1, char *n2, char *r, int size_r)
 	}
 
 	/* Remove leading zeros by shifting */
-	if (r[0] == '0')
+	k = 0;
+	while (r[k] == '0' && r[k + 1] != '\0')
+		k++;
+
+	if (k > 0)
 	{
-		for (i = 0; r[i] != '\0'; i++)
-			r[i] = r[i + 1];
+		for (i = 0; r[i + k] != '\0'; i++)
+			r[i] = r[i + k];
+		r[i] = '\0';
 	}
 
-	/* Handle case where result is exactly size_r - 1 */
+	/* Handle case where result is empty */
 	if (r[0] == '\0')
 	{
-		for (i = 0; i < max_len - 1; i++)
-			r[i] = '0';
-		r[i] = '\0';
+		r[0] = '0';
+		r[1] = '\0';
 	}
 
 	return (r);
