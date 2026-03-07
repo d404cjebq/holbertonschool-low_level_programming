@@ -24,10 +24,12 @@ void print_hex_row(char *b, int i, int size)
 		else
 			byte2 = 0;
 
-		if (i + j < size)
-			printf("%02x%02x ", byte1, byte2);
-		else
+		if (i + j >= size)
 			printf("     ");
+		else if (i + j + 1 >= size)
+			printf("%02x   ", byte1);
+		else
+			printf("%02x%02x ", byte1, byte2);
 	}
 }
 
