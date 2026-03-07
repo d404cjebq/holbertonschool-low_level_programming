@@ -11,7 +11,7 @@
  */
 char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-	int i, j, k, l1, l2, carry, sum, digit, max_len;
+	int i, j, k, l1, l2, carry, sum, digit, max_len, start;
 
 	/* Get lengths of both numbers */
 	for (l1 = 0; n1[l1] != '\0'; l1++)
@@ -26,8 +26,8 @@ char *infinite_add(char *n1, char *n2, char *r, int size_r)
 	if (max_len >= size_r)
 		return (0);
 
-	/* Initialize buffer with null terminators */
-	for (i = 0; i < size_r; i++)
+	/* Initialize buffer */
+	for (i = 0; i <= max_len; i++)
 		r[i] = '\0';
 
 	/* Start addition from the end of strings */
@@ -60,24 +60,11 @@ char *infinite_add(char *n1, char *n2, char *r, int size_r)
 		k--;
 	}
 
-	/* Remove leading zeros by shifting */
-	k = 0;
-	while (r[k] == '0' && r[k + 1] != '\0')
-		k++;
+	/* Find start position (skip leading zeros) */
+	start = 0;
+	while (r[start] == '0' && r[start + 1] != '\0')
+		start++;
 
-	if (k > 0)
-	{
-		for (i = 0; r[i + k] != '\0'; i++)
-			r[i] = r[i + k];
-		r[i] = '\0';
-	}
-
-	/* Handle case where result is empty */
-	if (r[0] == '\0')
-	{
-		r[0] = '0';
-		r[1] = '\0';
-	}
-
-	return (r);
+	/* Return pointer to correct position */
+	return (r + start);
 }
