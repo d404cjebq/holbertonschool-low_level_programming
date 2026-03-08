@@ -1,30 +1,21 @@
-/*
-* _memset - fills memory with a constant byte
- * @s: pointer to the memory area
- * @b: the constant byte to fill with
- * @n: number of bytes to fill
+/**
+ * _memcpy - copies n bytes from memory area src to memory area dest
+ * @dest: pointer to the destination memory area
+ * @src: pointer to the source memory area
+ * @n: number of bytes to copy
  *
- * Return: pointer to the memory area s
+ * Return: pointer to dest
  */
-void simple_print_buffer(char *buffer, unsigned int size)
+char *_memcpy(char *dest, char *src, unsigned int n)
 {
-        unsigned int i;
+    unsigned int i;
 
-        i = 0;
-        while (i < size)
-        {
-               if (i % 10){
-	       printf("  ");
-	       
-	       }
-                if (!(i % 10 )&& i)
-		{
-		printf("\n");
-		}
-         printf("0x%02x", buffer[i]);
-        i++;
-	}
-         printf("\n");
+    for (i = 0; i < n; i++)
+    {
+        dest[i] = src[i];
+    }
+
+    return (dest);
 }
 ~                                                                                                    
 ~                                                                                                    
