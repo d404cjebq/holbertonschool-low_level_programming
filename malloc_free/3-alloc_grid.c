@@ -37,10 +37,3 @@ int **alloc_grid(int width, int height)
 
 	return (grid);
 }
-```
-
-How the memory layout works:
-```
-grid → [ row0* | row1* | row2* | row3* ]
-          ↓       ↓       ↓       ↓
-        [0,0,0] [0,0,0] [0,0,0] [0,0,0]
