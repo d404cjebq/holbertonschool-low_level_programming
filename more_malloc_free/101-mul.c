@@ -2,12 +2,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-/**
- * is_valid - checks if string contains only digits
- * @s: the string
- *
- * Return: 1 if valid, 0 if not
- */
 static int is_valid(char *s)
 {
 	int i;
@@ -20,12 +14,6 @@ static int is_valid(char *s)
 	return (i > 0);
 }
 
-/**
- * str_len - returns length of string
- * @s: the string
- *
- * Return: length
- */
 static int str_len(char *s)
 {
 	int i;
@@ -35,13 +23,6 @@ static int str_len(char *s)
 	return (i);
 }
 
-/**
- * mul - multiplies two positive numbers
- * @n1: first number string
- * @n2: second number string
- *
- * Return: void
- */
 static void mul(char *n1, char *n2)
 {
 	int len1;
@@ -71,13 +52,13 @@ static void mul(char *n1, char *n2)
 	while (start < len1 + len2 - 1 && result[start] == 0)
 		start++;
 	for (i = start; i < len1 + len2; i++)
-		_putchar('0' + result[i]);
-	_putchar('\n');
+		putchar('0' + result[i]);
+	putchar('\n');
 	free(result);
 }
 
 /**
- * main - entry point
+ * main - multiplies two positive numbers
  * @ac: argument count
  * @av: argument vector
  *
