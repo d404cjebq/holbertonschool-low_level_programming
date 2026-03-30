@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 /**
- * count_words - counts words in a string separated by spaces
+ * count_words - counts words in a string
  * @str: the string
  *
  * Return: number of words
@@ -29,6 +29,23 @@ static int count_words(char *str)
 }
 
 /**
+ * word_len - returns length of word starting at str[i]
+ * @str: the string
+ * @i: starting index
+ *
+ * Return: length of the word
+ */
+static int word_len(char *str, int i)
+{
+	int len;
+
+	len = 0;
+	while (str[i + len] != '\0' && str[i + len] != ' ')
+		len++;
+	return (len);
+}
+
+/**
  * strtow - splits a string into words
  * @str: the string to split
  *
@@ -45,24 +62,19 @@ char **strtow(char *str)
 
 	if (str == NULL || str[0] == '\0')
 		return (NULL);
-
 	words = count_words(str);
 	if (words == 0)
 		return (NULL);
-
 	arr = malloc(sizeof(char *) * (words + 1));
 	if (arr == NULL)
 		return (NULL);
-
 	i = 0;
 	k = 0;
 	while (k < words)
 	{
 		while (str[i] == ' ')
 			i++;
-		len = 0;
-		while (str[i + len] != '\0' && str[i + len] != ' ')
-			len++;
+		len = word_len(str, i);
 		arr[k] = malloc(sizeof(char) * (len + 1));
 		if (arr[k] == NULL)
 		{
@@ -78,6 +90,5 @@ char **strtow(char *str)
 		k++;
 	}
 	arr[words] = NULL;
-
 	return (arr);
 }
