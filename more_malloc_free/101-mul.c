@@ -1,6 +1,6 @@
 #include "main.h"
 #include <stdlib.h>
-#include <stdio.h>
+#include <unistd.h>
 
 /**
  * is_valid - checks if string contains only digits
@@ -50,6 +50,7 @@ static void mul(char *n1, char *n2)
 	int i;
 	int j;
 	int start;
+	char c;
 
 	len1 = str_len(n1);
 	len2 = str_len(n2);
@@ -71,8 +72,12 @@ static void mul(char *n1, char *n2)
 	while (start < len1 + len2 - 1 && result[start] == 0)
 		start++;
 	for (i = start; i < len1 + len2; i++)
-		putchar('0' + result[i]);
-	putchar('\n');
+	{
+		c = '0' + result[i];
+		write(1, &c, 1);
+	}
+	c = '\n';
+	write(1, &c, 1);
 	free(result);
 }
 
@@ -87,12 +92,12 @@ int main(int ac, char **av)
 {
 	if (ac != 3)
 	{
-		printf("Error\n");
+		write(1, "Error\n", 6);
 		exit(98);
 	}
 	if (!is_valid(av[1]) || !is_valid(av[2]))
 	{
-		printf("Error\n");
+		write(1, "Error\n", 6);
 		exit(98);
 	}
 	mul(av[1], av[2]);
