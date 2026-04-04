@@ -55,7 +55,7 @@ static void mul(char *n1, char *n2)
 	len2 = str_len(n2);
 	result = malloc(sizeof(int) * (len1 + len2));
 	if (result == NULL)
-		return;
+		exit(98);
 	for (i = 0; i < len1 + len2; i++)
 		result[i] = 0;
 	for (i = len1 - 1; i >= 0; i--)
@@ -88,13 +88,13 @@ int main(int ac, char **av)
 	if (ac != 3)
 	{
 		printf("Error\n");
-		return (98);
+		exit(98);
 	}
 	if (!is_valid(av[1]) || !is_valid(av[2]))
 	{
 		printf("Error\n");
-		return (98);
+		exit(98);
 	}
 	mul(av[1], av[2]);
-	return (0);
+	exit(0);
 }
