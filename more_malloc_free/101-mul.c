@@ -34,6 +34,19 @@ int is_valid_number(char *str)
 }
 
 /**
+ * free_and_return_null - Frees a pointer and returns NULL
+ * @ptr: Pointer to free
+ *
+ * Return: NULL
+ */
+void *free_and_return_null(void *ptr)
+{
+    if (ptr != NULL)
+        free(ptr);
+    return (NULL);
+}
+
+/**
  * multiply_strings - Multiplies two numbers represented as strings
  * @num1: First number as string
  * @num2: Second number as string
@@ -45,11 +58,12 @@ char *multiply_strings(char *num1, char *num2)
     int len1, len2, len_result, i, j, start;
     int *result;
     char *result_str;
-    char *zero;
+    char *zero_result;
 
     len1 = strlen(num1);
     len2 = strlen(num2);
     len_result = len1 + len2;
+    
     result = calloc(len_result, sizeof(int));
     if (result == NULL)
         return (NULL);
@@ -76,17 +90,19 @@ char *multiply_strings(char *num1, char *num2)
     while (start < len_result && result[start] == 0)
         start++;
 
+    /* Handle zero result */
     if (start == len_result)
     {
         free(result);
-        zero = malloc(2);
-        if (zero == NULL)
+        zero_result = malloc(2);
+        if (zero_result == NULL)
             return (NULL);
-        zero[0] = '0';
-        zero[1] = '\0';
-        return (zero);
+        zero_result[0] = '0';
+        zero_result[1] = '\0';
+        return (zero_result);
     }
 
+    /* Allocate string for result */
     result_str = malloc(len_result - start + 1);
     if (result_str == NULL)
     {
@@ -94,6 +110,7 @@ char *multiply_strings(char *num1, char *num2)
         return (NULL);
     }
 
+    /* Fill the result string */
     for (i = start; i < len_result; i++)
         result_str[i - start] = result[i] + '0';
     result_str[len_result - start] = '\0';
