@@ -1,153 +1,100 @@
-#include <stdio.h>
+#include "main.h"
 #include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
+#include <stdio.h>
 
 /**
- * print_error_and_exit - Prints error message and exits with status 98
- */
-void print_error_and_exit(void)
-{
-    printf("Error\n");
-    exit(98);
-}
-
-/**
- * is_valid_number - Checks if a string contains only digits
- * @str: String to check
+ * is_valid - checks if string contains only digits
+ * @s: the string to check
  *
- * Return: 1 if valid, 0 otherwise
+ * Return: 1 if valid, 0 if not
  */
-int is_valid_number(char *str)
+static int is_valid(char *s)
 {
-    int i;
+	int i;
 
-    if (str == NULL || *str == '\0')
-        return (0);
-
-    for (i = 0; str[i] != '\0'; i++)
-    {
-        if (!isdigit(str[i]))
-            return (0);
-    }
-    return (1);
+	for (i = 0; s[i] != '\0'; i++)
+	{
+		if (s[i] < '0' || s[i] > '9')
+			return (0);
+	}
+	return (i > 0);
 }
 
 /**
- * free_and_return_null - Frees a pointer and returns NULL
- * @ptr: Pointer to free
+ * str_len - returns length of a string
+ * @s: the string
  *
- * Return: NULL
+ * Return: length of the string
  */
-void *free_and_return_null(void *ptr)
+static int str_len(char *s)
 {
-    if (ptr != NULL)
-        free(ptr);
-    return (NULL);
+	int i;
+
+	for (i = 0; s[i] != '\0'; i++)
+		;
+	return (i);
 }
 
 /**
- * multiply_strings - Multiplies two numbers represented as strings
- * @num1: First number as string
- * @num2: Second number as string
+ * mul - multiplies two number strings and prints result
+ * @n1: first number string
+ * @n2: second number string
  *
- * Return: Result as string, or NULL on failure
+ * Return: void
  */
-char *multiply_strings(char *num1, char *num2)
+static void mul(char *n1, char *n2)
 {
-    int len1, len2, len_result, i, j, start;
-    int *result;
-    char *result_str;
-    char *zero_result;
+	int len1;
+	int len2;
+	int *result;
+	int i;
+	int j;
+	int start;
 
-    len1 = strlen(num1);
-    len2 = strlen(num2);
-    len_result = len1 + len2;
-    
-    result = calloc(len_result, sizeof(int));
-    if (result == NULL)
-        return (NULL);
-
-    /* Multiply digit by digit */
-    for (i = len1 - 1; i >= 0; i--)
-    {
-        for (j = len2 - 1; j >= 0; j--)
-        {
-            int digit1 = num1[i] - '0';
-            int digit2 = num2[j] - '0';
-            int product = digit1 * digit2;
-            int pos1 = i + j;
-            int pos2 = i + j + 1;
-            int sum = product + result[pos2];
-
-            result[pos2] = sum % 10;
-            result[pos1] += sum / 10;
-        }
-    }
-
-    /* Convert result array to string */
-    start = 0;
-    while (start < len_result && result[start] == 0)
-        start++;
-
-    /* Handle zero result */
-    if (start == len_result)
-    {
-        free(result);
-        zero_result = malloc(2);
-        if (zero_result == NULL)
-            return (NULL);
-        zero_result[0] = '0';
-        zero_result[1] = '\0';
-        return (zero_result);
-    }
-
-    /* Allocate string for result */
-    result_str = malloc(len_result - start + 1);
-    if (result_str == NULL)
-    {
-        free(result);
-        return (NULL);
-    }
-
-    /* Fill the result string */
-    for (i = start; i < len_result; i++)
-        result_str[i - start] = result[i] + '0';
-    result_str[len_result - start] = '\0';
-
-    free(result);
-    return (result_str);
+	len1 = str_len(n1);
+	len2 = str_len(n2);
+	result = malloc(sizeof(int) * (len1 + len2));
+	if (result == NULL)
+		return;
+	for (i = 0; i < len1 + len2; i++)
+		result[i] = 0;
+	for (i = len1 - 1; i >= 0; i--)
+	{
+		for (j = len2 - 1; j >= 0; j--)
+		{
+			result[i + j + 1] += (n1[i] - '0') * (n2[j] - '0');
+			result[i + j] += result[i + j + 1] / 10;
+			result[i + j + 1] %= 10;
+		}
+	}
+	start = 0;
+	while (start < len1 + len2 - 1 && result[start] == 0)
+		start++;
+	for (i = start; i < len1 + len2; i++)
+		putchar('0' + result[i]);
+	putchar('\n');
+	free(result);
 }
 
 /**
- * main - Entry point, multiplies two positive numbers
- * @argc: Argument count
- * @argv: Argument vector
+ * main - multiplies two positive numbers
+ * @ac: argument count
+ * @av: argument vector
  *
  * Return: 0 on success, 98 on error
  */
-int main(int argc, char *argv[])
+int main(int ac, char **av)
 {
-    char *result;
-
-    /* Check number of arguments */
-    if (argc != 3)
-        print_error_and_exit();
-
-    /* Check if arguments contain only digits */
-    if (!is_valid_number(argv[1]) || !is_valid_number(argv[2]))
-        print_error_and_exit();
-
-    /* Multiply the numbers */
-    result = multiply_strings(argv[1], argv[2]);
-    if (result == NULL)
-        print_error_and_exit();
-
-    /* Print the result */
-    printf("%s\n", result);
-
-    /* Clean up */
-    free(result);
-
-    return (0);
+	if (ac != 3)
+	{
+		printf("Error\n");
+		return (98);
+	}
+	if (!is_valid(av[1]) || !is_valid(av[2]))
+	{
+		printf("Error\n");
+		return (98);
+	}
+	mul(av[1], av[2]);
+	return (0);
 }
