@@ -53,21 +53,23 @@ void print_all(const char * const format, ...)
 	va_list args;
 	unsigned int i;
 	unsigned int printed;
+	unsigned int j;
 	void (*funcs[4])(va_list);
 	char keys[4];
 
-	keys[0] = 'c'; funcs[0] = print_char;
-	keys[1] = 'i'; funcs[1] = print_int;
-	keys[2] = 'f'; funcs[2] = print_float;
-	keys[3] = 's'; funcs[3] = print_str;
-
+	keys[0] = 'c';
+	keys[1] = 'i';
+	keys[2] = 'f';
+	keys[3] = 's';
+	funcs[0] = print_char;
+	funcs[1] = print_int;
+	funcs[2] = print_float;
+	funcs[3] = print_str;
 	i = 0;
 	printed = 0;
 	va_start(args, format);
 	while (format && format[i])
 	{
-		unsigned int j;
-
 		j = 0;
 		while (j < 4)
 		{
