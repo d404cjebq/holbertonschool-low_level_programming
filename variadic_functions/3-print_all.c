@@ -3,6 +3,45 @@
 #include <stdio.h>
 
 /**
+ * print_char - prints a char
+ * @args: va_list
+ */
+static void print_char(va_list args)
+{
+	printf("%c", va_arg(args, int));
+}
+
+/**
+ * print_int - prints an int
+ * @args: va_list
+ */
+static void print_int(va_list args)
+{
+	printf("%d", va_arg(args, int));
+}
+
+/**
+ * print_float - prints a float
+ * @args: va_list
+ */
+static void print_float(va_list args)
+{
+	printf("%f", va_arg(args, double));
+}
+
+/**
+ * print_str - prints a string
+ * @args: va_list
+ */
+static void print_str(va_list args)
+{
+	char *str;
+
+	str = va_arg(args, char *);
+	printf("%s", str ? str : "(nil)");
+}
+
+/**
  * print_all - prints anything
  * @format: list of types of arguments
  * @...: the arguments to print
@@ -14,24 +53,33 @@ void print_all(const char * const format, ...)
 	va_list args;
 	unsigned int i;
 	unsigned int printed;
-	char *str;
+	void (*funcs[4])(va_list);
+	char keys[4];
+
+	keys[0] = 'c'; funcs[0] = print_char;
+	keys[1] = 'i'; funcs[1] = print_int;
+	keys[2] = 'f'; funcs[2] = print_float;
+	keys[3] = 's'; funcs[3] = print_str;
 
 	i = 0;
 	printed = 0;
 	va_start(args, format);
 	while (format && format[i])
 	{
-		str = NULL;
-		if (format[i] == 'c')
-			printf("%s%c", printed++ ? ", " : "", va_arg(args, int));
-		if (format[i] == 'i')
-			printf("%s%d", printed++ ? ", " : "", va_arg(args, int));
-		if (format[i] == 'f')
-			printf("%s%f", printed++ ? ", " : "", va_arg(args, double));
-		if (format[i] == 's')
+		unsigned int j;
+
+		j = 0;
+		while (j < 4)
 		{
-			str = va_arg(args, char *);
-			printf("%s%s", printed++ ? ", " : "", str ? str : "(nil)");
+			if (format[i] == keys[j])
+			{
+				if (printed)
+					printf(", ");
+				funcs[j](args);
+				printed++;
+				break;
+			}
+			j++;
 		}
 		i++;
 	}
