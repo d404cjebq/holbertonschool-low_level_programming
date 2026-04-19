@@ -15,7 +15,7 @@ size_t count = 0;
    if(h -> str == NULL)
 	   printf("[0] (nil)\n");
    else
-	   printf("[%U] %s\n",h -> len ,h -> str );
+	   printf("[%u] %s\n",h -> len ,h -> str );
            count++;
           h =h ->next;
    }
